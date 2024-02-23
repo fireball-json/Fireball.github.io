@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Fireball.Json Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Fireball.Json Blog">
+<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:site_name" content="Fireball.Json Blog">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="Fireball_Json">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Fireball.Json Blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Fireball.Json Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-NuxtJs Memory Leak" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/01/20/NuxtJs%20Memory%20Leak/" class="article-date">
+  <time class="dt-published" datetime="2024-01-20T14:17:41.000Z" itemprop="datePublished">2024-01-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/01/20/NuxtJs%20Memory%20Leak/">NuxtJs-2.x Memory Leak</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <hr>
+<h2 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h2><p>During my previous job, I met a problem where the server memory useage is always increase very quickly, and it will reboot automatically when memory useage reached a threshold. At first, we speculated that meybe it is due to the high visit volume during peak time, and the solution is …emmm ADD MORE SERVER! (┓( ´∀&#96; )┏)<br>And it’s easy to predict what will happen next: our website will run slower and slower. At last, we decide to check whether we encountered memory leak.</p>
+<h2 id="Memory-Leak"><a href="#Memory-Leak" class="headerlink" title="Memory Leak"></a>Memory Leak</h2><p>First of all, I have to figure it out if the memory leak has really happpened. Our production is a server side render website which we used NuxtJs-2.X to make it. So as the memory leak occurs on the server side, we can’t simply use the <strong><code>Memory</code></strong> tool from Chrome Dev-Tools to take a snapshot of the heap size. Fortunately I discovered a solution from other developer’s articles.</p>
+<h3 id="How-to-take-server-side-memory-snapshot"><a href="#How-to-take-server-side-memory-snapshot" class="headerlink" title="How to take server side memory snapshot"></a>How to take server side memory snapshot</h3><p>There is a tool that chrome give to us to inspect the devices. Just type <em><code>chrome://inspect/#devices</code></em> into the address bar of chrome broswer, and then you will see something like this:</p>
+<p><img src="/../img/blog/memory_leak_1.png" alt="chrome://inspect/#devices"><br>Set your server side local address in <strong><code>Configure</code></strong> of <strong><code> Discover network targets</code></strong>, and then it will work when the service of server-side is running.</p>
+<h4 id="Set-inspect-port-before-build"><a href="#Set-inspect-port-before-build" class="headerlink" title="Set inspect port before build"></a>Set inspect port before build</h4><p>After kowning how to inpect server-side memory useage, there is another problem with how to run our server on a specific port. And Node give us a solution which named <code>v8 Inspector Protocol</code>. Add the following code to <code>package.json</code>, and run it.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="string">&quot;inspect:start&quot;</span>: <span class="string">&quot;node --inspect=9001 node_modules/nuxt/bin/nuxt start --modern=server&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Take-server-side-heap-snapshots"><a href="#Take-server-side-heap-snapshots" class="headerlink" title="Take server-side heap snapshots"></a>Take server-side heap snapshots</h4><p>Before excuting this command, you need build your project first. When the project is running normally, visit <code>chrome://inspect/#devices</code>, and choose the <code>Memory</code> panel. Take heap snapshots twice and compare them.</p>
+<p><img src="/../img/blog/memory_leak_2.png" alt="memory snapshot comparation"></p>
+<p>If you need send lot of concurrent requests when take heap snapshot, try <a target="_blank" rel="noopener" href="https://github.com/alexfernandez/loadtest">loadtest</a>, it helps me a lot.</p>
+<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><p>After check more code, I found a eventbus that may be the ultimate reason.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">created</span></span> () &#123;</span><br><span class="line">  eventHub.<span class="variable">$on</span>(EventName, () =&gt; &#123;</span><br><span class="line">    this.loading = <span class="literal">true</span> <span class="string">&quot;//this is use in a component which we regist with vue.component&quot;</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>Thaught we use <code>$off</code> to cancel it in the hook <code>unmounted</code>, but but according to the reference of nuxtjs, there are only two lifecycle hooks be called both, from client-side and server-side: <code>beforeCreate</code> and <code>created</code>. </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">created</span></span> () &#123;</span><br><span class="line">  <span class="keyword">if</span>(process.env === <span class="string">&#x27;client&#x27;</span>)&#123; <span class="string">&quot;//add a enviroment judgement&quot;</span> </span><br><span class="line">    eventHub.<span class="variable">$on</span>(EventName, () =&gt; &#123;</span><br><span class="line">      this.loading = <span class="literal">true</span> </span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>After add a judgement about enviroment, I took another two snapshot and the problem seems be solved.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>The content above describes the process of how I identify the server-side memory leak problem and solve it. In fact, during the time when I was looking for information in the Nuxtjs document, I found that <code>vue.use</code> and <code>vue.component</code> may cause memory leak, but I’m not sure if it is related to this project. I can’t go into this problem due to my dismissal from my last job, I tried to reproducing the issue with nuxtjs-3.x, but it didn’t go as planned. Maybe next time when I meet something simillar, I will update this blog!😊</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a target="_blank" rel="noopener" href="https://medium.com/le-collectionist/solving-server-side-memory-leaks-on-nuxt-js-ecd6b16b54a0">https://medium.com/le-collectionist/solving-server-side-memory-leaks-on-nuxt-js-ecd6b16b54a0</a><br><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/66831561/nuxt-add-global-plugins-memory-leakage-issue">https://stackoverflow.com/questions/66831561/nuxt-add-global-plugins-memory-leakage-issue</a><br><a target="_blank" rel="noopener" href="https://github.com/alexfernandez/loadtest">https://github.com/alexfernandez/loadtest</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/01/20/NuxtJs%20Memory%20Leak/" data-id="clsvspuxo0000tgtzhgcp2ya8" data-title="NuxtJs-2.x Memory Leak" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/NuxtJs/" rel="tag">NuxtJs</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/NuxtJs/" style="font-size: 10px;">NuxtJs</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/01/20/NuxtJs%20Memory%20Leak/">NuxtJs-2.x Memory Leak</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 Fireball_Json<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
