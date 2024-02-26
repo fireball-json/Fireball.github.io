@@ -16,8 +16,9 @@
 <meta property="og:image" content="http://example.com/img/blog/memory_leak_1.png">
 <meta property="og:image" content="http://example.com/img/blog/memory_leak_2.png">
 <meta property="article:published_time" content="2024-01-20T14:17:41.000Z">
-<meta property="article:modified_time" content="2024-02-24T03:51:06.214Z">
+<meta property="article:modified_time" content="2024-02-26T04:39:45.164Z">
 <meta property="article:author" content="Fireball_Json">
+<meta property="article:tag" content="NuxtJs">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/img/blog/memory_leak_1.png">
   
@@ -99,12 +100,12 @@
         <hr>
 <h2 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h2><p>During my previous job, I met a problem where the server memory useage is always increase very quickly, and it will reboot automatically when memory useage reached a threshold. At first, we speculated that meybe it is due to the high visit volume during peak time, and the solution is …emmm ADD MORE SERVER! (┓( ´∀&#96; )┏)<br>And it’s easy to predict what will happen next: our website will run slower and slower. At last, we decide to check whether we encountered memory leak.</p>
 <h2 id="Memory-Leak"><a href="#Memory-Leak" class="headerlink" title="Memory Leak"></a>Memory Leak</h2><p>First of all, I have to figure it out if the memory leak has really happpened. Our production is a server side render website which we used NuxtJs-2.X to make it. So as the memory leak occurs on the server side, we can’t simply use the <strong><code>Memory</code></strong> tool from Chrome Dev-Tools to take a snapshot of the heap size. Fortunately I discovered a solution from other developer’s articles.</p>
-<h3 id="How-to-take-server-side-memory-snapshot"><a href="#How-to-take-server-side-memory-snapshot" class="headerlink" title="How to take server side memory snapshot"></a>How to take server side memory snapshot</h3><p>There is a tool that chrome give to us to inspect the devices. Just type <strong><code>chrome://inspect/#devices</code></strong> into the address bar of chrome broswer, and then you will see something like this:</p>
+<h3 id="1-How-to-take-server-side-memory-snapshot"><a href="#1-How-to-take-server-side-memory-snapshot" class="headerlink" title="1. How to take server side memory snapshot"></a>1. How to take server side memory snapshot</h3><p>There is a tool that chrome give to us to inspect the devices. Just type <strong><code>chrome://inspect/#devices</code></strong> into the address bar of chrome broswer, and then you will see something like this:</p>
 <p><img src="/../img/blog/memory_leak_1.png" alt="chrome://inspect/#devices"><br>Set your server side local address in <strong><code>Configure</code></strong> of <strong><code> Discover network targets</code></strong>, and then it will work when the service of server-side is running.</p>
-<h4 id="Set-inspect-port-before-build"><a href="#Set-inspect-port-before-build" class="headerlink" title="Set inspect port before build"></a>Set inspect port before build</h4><p>After kowning how to inpect server-side memory useage, there is another problem with how to run our server on a specific port. And Node give us a solution which named <code>v8 Inspector Protocol</code>. Add the following code to <code>package.json</code>, and run it.</p>
+<h4 id="2-Set-inspect-port-before-build"><a href="#2-Set-inspect-port-before-build" class="headerlink" title="2. Set inspect port before build"></a>2. Set inspect port before build</h4><p>After kowning how to inpect server-side memory useage, there is another problem with how to run our server on a specific port. And Node give us a solution which named <code>v8 Inspector Protocol</code>. Add the following code to <code>package.json</code>, and run it.</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="string">&quot;inspect:start&quot;</span>: <span class="string">&quot;node --inspect=9001 node_modules/nuxt/bin/nuxt start --modern=server&quot;</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="Take-server-side-heap-snapshots"><a href="#Take-server-side-heap-snapshots" class="headerlink" title="Take server-side heap snapshots"></a>Take server-side heap snapshots</h4><p>Before excuting this command, you need build your project first. When the project is running normally, visit <code>chrome://inspect/#devices</code>, and choose the <code>Memory</code> panel. Take heap snapshots twice and compare them.</p>
+<h4 id="3-Take-server-side-heap-snapshots"><a href="#3-Take-server-side-heap-snapshots" class="headerlink" title="3. Take server-side heap snapshots"></a>3. Take server-side heap snapshots</h4><p>Before excuting this command, you need build your project first. When the project is running normally, visit <code>chrome://inspect/#devices</code>, and choose the <code>Memory</code> panel. Take heap snapshots twice and compare them.</p>
 <p><img src="/../img/blog/memory_leak_2.png" alt="memory snapshot comparation"></p>
 <p>If you need send lot of concurrent requests when take heap snapshot, try <a target="_blank" rel="noopener" href="https://github.com/alexfernandez/loadtest">loadtest</a>, it helps me a lot.</p>
 <h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><p>After check more code, I found an <code>eventbus</code> that may be the ultimate reason.</p>
@@ -123,10 +124,26 @@
       
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NuxtJs/" rel="tag">NuxtJs</a></li></ul>
+
     </footer>
   </div>
   
     
+<nav id="article-nav">
+  
+    <a href="/2024/02/20/Typescript%20Study%20Notes/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Typescript Study Notes
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
   
 </article>
 
@@ -142,7 +159,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/NuxtJs/" rel="tag">NuxtJs</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/NuxtJs/" rel="tag">NuxtJs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Typescript/" rel="tag">Typescript</a></li></ul>
     </div>
   </div>
 
@@ -152,7 +169,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/NuxtJs/" style="font-size: 10px;">NuxtJs</a>
+      <a href="/tags/NuxtJs/" style="font-size: 10px;">NuxtJs</a> <a href="/tags/Typescript/" style="font-size: 10px;">Typescript</a>
     </div>
   </div>
 
@@ -161,7 +178,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/02/">February 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li></ul>
     </div>
   </div>
 
@@ -172,6 +189,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2024/02/20/Typescript%20Study%20Notes/">Typescript Study Notes</a>
+          </li>
         
           <li>
             <a href="/2024/01/20/NuxtJs%20Memory%20Leak/">NuxtJs-2.x Memory Leak</a>
