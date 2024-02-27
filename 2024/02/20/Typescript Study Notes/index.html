@@ -6,16 +6,16 @@
   
   <title>Typescript Study Notes | Fireball.Json Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Catalouge Preface Union type and Intersection type Keyof Union type Satisfies Ergodic union type    PrefaceI have used Typescript in development for about one and half year, but a systematic learning">
+  <meta name="description" content="Catalouge Preface Union type and Intersection type Keyof Union type Satisfies Ergodic union type">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Typescript Study Notes">
 <meta property="og:url" content="http://example.com/2024/02/20/Typescript%20Study%20Notes/index.html">
 <meta property="og:site_name" content="Fireball.Json Blog">
-<meta property="og:description" content="Catalouge Preface Union type and Intersection type Keyof Union type Satisfies Ergodic union type    PrefaceI have used Typescript in development for about one and half year, but a systematic learning">
+<meta property="og:description" content="Catalouge Preface Union type and Intersection type Keyof Union type Satisfies Ergodic union type">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/img/blog/typescript_1.png">
 <meta property="article:published_time" content="2024-02-20T14:55:55.000Z">
-<meta property="article:modified_time" content="2024-02-26T06:27:13.370Z">
+<meta property="article:modified_time" content="2024-02-27T03:27:52.070Z">
 <meta property="article:author" content="Fireball_Json">
 <meta property="article:tag" content="Typescript">
 <meta name="twitter:card" content="summary">
@@ -105,6 +105,9 @@
 </ul>
 </li>
 </ul>
+<span id="more"></span>
+
+
 <h2 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a><span id="preface" />Preface</h2><p>I have used Typescript in development for about one and half year, but a systematic learning is never happened during my front-end work. Luckly, I got a period time between my last job and my next job, so it’s time to make deep study of Typescript🎉!</p>
 <h2 id="Union-type-and-Intersection-type"><a href="#Union-type-and-Intersection-type" class="headerlink" title="Union type and Intersection type"></a><span id="utait" />Union type and Intersection type</h2><h4 id="1-Keyof-union-type"><a href="#1-Keyof-union-type" class="headerlink" title="1. Keyof union type"></a><span id="utait_1" />1. Keyof union type</h4><p>Union type is a way to combine types, formed from two or more other types. So what about the keys of a union type?</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">UnionInterface</span> = &#123; <span class="attr">name</span>: <span class="built_in">string</span> &#125; | &#123; <span class="attr">name</span>: <span class="built_in">string</span>; <span class="attr">age</span>: <span class="built_in">number</span>; <span class="attr">sex</span>: <span class="built_in">number</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">people1</span>: <span class="title class_">UnionInterface</span> = &#123; <span class="attr">name</span>: <span class="string">&#x27;JACK&#x27;</span> &#125; <span class="comment">// √</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">people2</span>: <span class="title class_">UnionInterface</span> = &#123; <span class="attr">name</span>: <span class="string">&#x27;JACK&#x27;</span>, <span class="attr">age</span>: <span class="number">23</span> &#125; <span class="comment">// √</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">people3</span>: <span class="title class_">UnionInterface</span> = &#123; <span class="attr">age</span>: <span class="number">23</span> &#125; <span class="comment">// ×</span></span><br></pre></td></tr></table></figure>
