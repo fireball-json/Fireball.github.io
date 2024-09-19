@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>移动端开发遇到的问题 | Fireball.Json Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="安卓保存图片乱序 IOS切换应用音频失效">
+<meta property="og:type" content="article">
+<meta property="og:title" content="移动端开发遇到的问题">
+<meta property="og:url" content="http://example.com/2024/07/20/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="Fireball.Json Blog">
+<meta property="og:description" content="安卓保存图片乱序 IOS切换应用音频失效">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/blog/mobile_1.png">
+<meta property="article:published_time" content="2024-07-20T04:18:41.000Z">
+<meta property="article:modified_time" content="2024-09-19T08:03:06.199Z">
+<meta property="article:author" content="Fireball_Json">
+<meta property="article:tag" content="Android IOS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/blog/mobile_1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Fireball.Json Blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Fireball.Json Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-移动端开发遇到的问题" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/07/20/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" class="article-date">
+  <time class="dt-published" datetime="2024-07-20T04:18:41.000Z" itemprop="datePublished">2024-07-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      移动端开发遇到的问题
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><a href="#title_1">安卓保存图片乱序</a></li>
+<li><a href="#title_2">IOS切换应用音频失效</a></li>
+</ul>
+<span id="more"></span>
+
+<h2 id="1-安卓保存图片乱序"><a href="#1-安卓保存图片乱序" class="headerlink" title="1.安卓保存图片乱序"></a><span id="title_1" />1.安卓保存图片乱序</h2><h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>在之前的安卓开发中，用户反馈软件软件保存的顺序混乱(这里需要提一下，软件保存图片是在<strong>同一时间保存多张、有顺序的图片</strong>)。</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>经过最初的复现，发现图片的名称命名为：xxx_1，会产生：xxx_1，xxx_11，…，xxx_2 这样的顺序。<br>修改名称到新的格式：xxx_001，在手机上保存十几张图片，发现顺序恢复正常，遂进行其它的工作。</p>
+<p>但是还是偶尔有用户反馈顺序混乱，问题并没有解决。经过详细的检查，发现有以下问题：</p>
+<ol>
+<li>IOS系统和桌面端，顺序是正常的；</li>
+<li>安卓手机中，图库的顺序都有问题；</li>
+<li>安卓手机中，保存图片的文件夹中，华为的顺序是正常的，其它的混乱；</li>
+<li>单次保存的图片量需要比较大才会出现问题；</li>
+</ol>
+<p>由于以上的原因，所以这个问题偶尔才只是偶尔出现。查询图片的属性，发现在android系统中，图片默认排序是<strong>修改时间</strong>排序；所以在原生端中使用File的<code>setLastModified</code>修改图片<strong>修改时间</strong>属性。依次增加<strong>1ms</strong>之后却没有解决问题，查询相关信息得知，<strong>android最小间隔时间是1秒</strong>，所以最终解决方案只是在保存函数运行的时候，为每一张图片的<strong>修改时间</strong>依次增加一秒。这样或许会引发其它的问题，所以这只是一个暂时的解决方案。</p>
+<h2 id="2-IOS切换应用音频失效"><a href="#2-IOS切换应用音频失效" class="headerlink" title="2.IOS切换应用音频失效"></a><span id="title_2" />2.IOS切换应用音频失效</h2><h3 id="问题描述-1"><a href="#问题描述-1" class="headerlink" title="问题描述"></a>问题描述</h3><p>在IOS的开发中，遇到一个问题，当app在后台切换之后，再次进入，音频播放会直接失效，safari查看控制台，未见报错。</p>
+<h3 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h3><p>查看代码发现，在项目中，并不是直接创建的<code>&lt;audio&gt;</code>标签进行音频播放，而是使用了<code>AudioContext</code>的实例，调用<code>decodeAudioData</code>读取buffer的信息，查阅MDN文档获取了以下信息(尽量查阅英文版本的MDN文档)：</p>
+<h5 id="1-AudioContext对象"><a href="#1-AudioContext对象" class="headerlink" title="1.AudioContext对象"></a>1.AudioContext对象</h5><p><code>AudioContext</code>是一个有音频模块链接成的处理图，每一个模块都是一个<code>AudioNode</code>模块，我们只需要创建一个<code>AudioContext</code>对象，即可在上下文中处理所有事情。</p>
+<h5 id="2-实例方法"><a href="#2-实例方法" class="headerlink" title="2.实例方法"></a>2.实例方法</h5><p><code>AudioContext</code>上挂载了多个实例方法，常用的：</p>
+<ol>
+<li><strong>close</strong>：关闭节点，但是在其它引用解除之前是不会释放对象的，只是会暂停音频进程和暂停音频处理；</li>
+<li><strong>suspend</strong>：暂停音频上下文进度，暂时剥离对音频硬件访问。可以减少对cpu和电池的使用。</li>
+<li><strong>resume</strong>：恢复被暂停的音频。</li>
+</ol>
+<h5 id="3-音频状态"><a href="#3-音频状态" class="headerlink" title="3.音频状态"></a>3.音频状态</h5><p>音频状态有三个：<strong>closed</strong>，<strong>suspend</strong>，<strong>running</strong>。<br>对应了上述实例方法调用之后的状态，调用<code>close</code>之后，state转为<strong>closed</strong>状态；同样的，调用<code>suspend</code>后，状态转为<strong>suspended</strong>状态； 当正常播放时，则为<strong>running</strong>状态。</p>
+<h3 id="问题确认"><a href="#问题确认" class="headerlink" title="问题确认"></a>问题确认</h3><p>现在回到问题，为什么只在ios发生了这个问题呢，需要再测试一下：<br>打开代码发现，切换后台这个动作在app内部没有做任何动作，即音频还是在后台继续播放；使用真机测试后发现，android切换到后台，app音频仍在播放，切换回去之后，<strong>AudioContext.state</strong>的状态是<strong>running</strong>，那ios呢，切换后台之后，音频在播放，<strong>AudioContext.currentTime</strong>是在正常流动的，可是没有声音，同时切换回app之后，<strong>AudioContext.state</strong>是<strong>interrupted</strong>状态…<br>正在疑惑的时候，我突然想到查阅mdn文档经常遇到的问题，果断切换到英文之后，找到了原因：</p>
+<p><img src="/../img/blog/mobile_1.png" alt="MDN DOCS in English"></p>
+<h3 id="解决方案-1"><a href="#解决方案-1" class="headerlink" title="解决方案"></a>解决方案</h3><p>查阅文档之后，在不影响原来的逻辑的情况下，在代码中补充了两个操作：<br>    1. 判断ios环境，在切换到后台之后，暂停播放；<br>    2. 判断ios环境，在播放操作触发时，判断状态是否是<strong>interrupted</strong>，若是，则调用<code>resume</code>方法。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/07/20/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" data-id="cm17l2fud0000dsu8frlf7bpn" data-title="移动端开发遇到的问题" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android-IOS/" rel="tag">Android IOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2024/02/20/Typescript%20Study%20Notes/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Typescript Study Notes</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-IOS/" rel="tag">Android IOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NuxtJs/" rel="tag">NuxtJs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Typescript/" rel="tag">Typescript</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android-IOS/" style="font-size: 10px;">Android IOS</a> <a href="/tags/NuxtJs/" style="font-size: 10px;">NuxtJs</a> <a href="/tags/Typescript/" style="font-size: 10px;">Typescript</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/02/">February 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/07/20/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/">移动端开发遇到的问题</a>
+          </li>
+        
+          <li>
+            <a href="/2024/02/20/Typescript%20Study%20Notes/">Typescript Study Notes</a>
+          </li>
+        
+          <li>
+            <a href="/2024/01/20/NuxtJs%20Memory%20Leak/">NuxtJs-2.x Memory Leak</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 Fireball_Json<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
