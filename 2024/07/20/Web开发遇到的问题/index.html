@@ -4,15 +4,22 @@
   <meta charset="utf-8">
   
   
-  <title>Fireball.Json Blog</title>
+  <title>Web开发遇到的问题：Resize操作 | Fireball.Json Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Fireball.Json Blog">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="Resize Obeserver clientHeight &amp; getBoundingClientRect  1.Resize Observer报错发现问题在一个多层嵌套的组件中，控制台总是会报错一个error: ResizeObserver loop completed with undelivered notifications.，但是不影响整个项目的运行。  在google搜索，指">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web开发遇到的问题：Resize操作">
+<meta property="og:url" content="http://example.com/2024/07/20/Web%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="Fireball.Json Blog">
+<meta property="og:description" content="Resize Obeserver clientHeight &amp; getBoundingClientRect  1.Resize Observer报错发现问题在一个多层嵌套的组件中，控制台总是会报错一个error: ResizeObserver loop completed with undelivered notifications.，但是不影响整个项目的运行。  在google搜索，指">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/blog/web_1.png">
+<meta property="article:published_time" content="2024-07-20T04:18:41.000Z">
+<meta property="article:modified_time" content="2024-09-25T08:43:05.327Z">
 <meta property="article:author" content="Fireball_Json">
+<meta property="article:tag" content="ResizeObserver">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/blog/web_1.png">
   
     <link rel="alternate" href="/atom.xml" title="Fireball.Json Blog" type="application/atom+xml">
   
@@ -67,57 +74,7 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-移动端开发遇到的问题" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/07/20/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" class="article-date">
-  <time class="dt-published" datetime="2024-07-20T04:18:41.000Z" itemprop="datePublished">2024-07-20</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/07/20/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/">移动端开发遇到的问题</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><a href="#title_1">安卓保存图片乱序</a></li>
-<li><a href="#title_2">IOS切换应用音频失效</a></li>
-</ul>
-        
-          <p class="article-more-link">
-            <a href="/2024/07/20/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2024/07/20/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" data-id="cm17l2fud0000dsu8frlf7bpn" data-title="移动端开发遇到的问题" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android-IOS/" rel="tag">Android IOS</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-Web开发遇到的问题" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-Web开发遇到的问题" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2024/07/20/Web%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" class="article-date">
   <time class="dt-published" datetime="2024-07-20T04:18:41.000Z" itemprop="datePublished">2024-07-20</time>
@@ -130,8 +87,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/07/20/Web%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/">Web开发遇到的问题：Resize操作</a>
+    <h1 class="p-name article-title" itemprop="headline name">
+      Web开发遇到的问题：Resize操作
     </h1>
   
 
@@ -168,118 +125,28 @@
     </footer>
   </div>
   
-</article>
-
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-Typescript Study Notes" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/02/20/Typescript%20Study%20Notes/" class="article-date">
-  <time class="dt-published" datetime="2024-02-20T14:55:55.000Z" itemprop="datePublished">2024-02-20</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+    <a href="/2024/07/20/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
         
+          移动端开发遇到的问题
+        
+      </div>
+    </a>
   
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/02/20/Typescript%20Study%20Notes/">Typescript Study Notes</a>
-    </h1>
   
+    <a href="/2024/02/20/Typescript%20Study%20Notes/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Typescript Study Notes</div>
+    </a>
+  
+</nav>
 
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="Catalouge"><a href="#Catalouge" class="headerlink" title="Catalouge"></a>Catalouge</h2><ul>
-<li><a href="#preface">Preface</a></li>
-<li><a href="#utait">Union type and Intersection type</a><ul>
-<li><a href="#utait_1">Keyof Union type</a></li>
-<li><a href="#utait_2">Satisfies</a></li>
-<li><a href="#utait_3">Ergodic union type</a></li>
-</ul>
-</li>
-<li><a href="#ct">Conditional types</a><ul>
-<li><a href="#ct_1">Keyword <code>infer</code></a></li>
-<li><a href="#ct_2">Compare diffirent types</a></li>
-<li><a href="#ct_3">Distribute union types</a>
-        
-          <p class="article-more-link">
-            <a href="/2024/02/20/Typescript%20Study%20Notes/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2024/02/20/Typescript%20Study%20Notes/" data-id="clt1n6u6s0001x0tz8saehk6p" data-title="Typescript Study Notes" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Typescript/" rel="tag">Typescript</a></li></ul>
-
-    </footer>
-  </div>
   
 </article>
-
-
-
-  
-    <article id="post-NuxtJs Memory Leak" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/01/20/NuxtJs%20Memory%20Leak/" class="article-date">
-  <time class="dt-published" datetime="2024-01-20T14:17:41.000Z" itemprop="datePublished">2024-01-20</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/01/20/NuxtJs%20Memory%20Leak/">NuxtJs-2.x Memory Leak</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><a href="#Problem">Problem</a></li>
-<li><a href="#Memory">Memory Leak </a></li>
-<li><a href="#Solution">Solution</a></li>
-<li><a href="#Conclusion">Conclusion</a></li>
-<li><a href="#Reference">Reference</a></li>
-</ul>
-        
-          <p class="article-more-link">
-            <a href="/2024/01/20/NuxtJs%20Memory%20Leak/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2024/01/20/NuxtJs%20Memory%20Leak/" data-id="clsvspuxo0000tgtzhgcp2ya8" data-title="NuxtJs-2.x Memory Leak" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NuxtJs/" rel="tag">NuxtJs</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
 </section>
