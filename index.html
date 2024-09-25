@@ -69,6 +69,53 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Web开发遇到的问题" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/08/12/Web%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" class="article-date">
+  <time class="dt-published" datetime="2024-08-12T04:18:41.000Z" itemprop="datePublished">2024-08-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/08/12/Web%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/">Web开发遇到的问题：Resize操作</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><a href="#title_1">Resize Obeserver</a></li>
+<li><a href="#title_2">clientHeight &amp; getBoundingClientRect</a>
+        
+          <p class="article-more-link">
+            <a href="/2024/08/12/Web%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/08/12/Web%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" data-id="cm1a4ksoi0000ugu8chby1fiw" data-title="Web开发遇到的问题：Resize操作" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ResizeObserver/" rel="tag">ResizeObserver</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-移动端开发遇到的问题" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2024/07/20/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" class="article-date">
@@ -108,62 +155,6 @@
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android-IOS/" rel="tag">Android IOS</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-Web开发遇到的问题" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/07/20/Web%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" class="article-date">
-  <time class="dt-published" datetime="2024-07-20T04:18:41.000Z" itemprop="datePublished">2024-07-20</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/07/20/Web%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/">Web开发遇到的问题：Resize操作</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><a href="#title_1">Resize Obeserver</a></li>
-<li><a href="#title_2">clientHeight &amp; getBoundingClientRect</a></li>
-</ul>
-<h2 id="1-Resize-Observer报错"><a href="#1-Resize-Observer报错" class="headerlink" title="1.Resize Observer报错"></a><span id="title_1" />1.Resize Observer报错</h2><h3 id="发现问题"><a href="#发现问题" class="headerlink" title="发现问题"></a>发现问题</h3><p>在一个多层嵌套的组件中，控制台总是会报错一个error: <code>ResizeObserver loop completed with undelivered notifications.</code>，但是不影响整个项目的运行。</p>
-<p><img src="/../img/blog/web_1.png" alt="console error"></p>
-<p>在google搜索，指向英文的MDN文档，有具体的解释（所以一定切英文MDN文档查资料）。正常的resize事件应当在绘制前调用，当resize事件触发后，样式重新进行评估，可会导致更多的resize事件触发。而回到这次遇到问题的组件中，我发现，当上层组件调整大小后，底层组件通过ResizeObserver回调，来实现自身自适应的大小变换，这个计算量比较大，而这个过程并没有限制在绘制前还是绘制后执行。</p>
-<h3 id="初步解决"><a href="#初步解决" class="headerlink" title="初步解决"></a>初步解决</h3><p>检查改变元素大小的相关代码，发现是使用拖动改变元素的，最开始觉得是同一时间触发的事件太多了，而每次计算时间又不那么短，所以导致每次调用函数时没有执行完成导致的，在原基础上使用的setTimeout进行制约，发现没有报错了，但是拖动放大的动画不是很舒服，后续改用requestAnimationFrame之后，体验增加了。</p>
-<h5 id="requestAnimationFrame"><a href="#requestAnimationFrame" class="headerlink" title="requestAnimationFrame"></a>requestAnimationFrame</h5><p>这是一个挂载在window对象下的方法，这是一个类似于setInterval的api</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">requestAnimationFrame</span>(callback)</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">callback</span>(<span class="params">timestamp</span>) &#123;</span><br><span class="line">  <span class="comment">// timestamp是每一次调用函数的开始时间</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>与setInterval不同的是，它不是依照时间进行回调的，而是依赖于屏幕刷新率。当浏览器准备渲染下一帧时，则会调用callback回调函数。这个回调函数有一个参数，是该回调函数执行时的开始时间。使用这个api进行动画的渲染，会非常的流畅，但是因为执行是基于刷新率，在高刷新率时，动画执行速度会快一些，这时可以用callback函数的timestamp参数进行动画的计算。需要注意的是<strong>回调函数总是在下一帧渲染时调用，所以这个时间并不是当前帧的时间，此外下一帧调用也意味着这是一个异步执行的函数</strong></p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>对于<strong>ResizeObserver loop completed with undelivered notifications.<strong>这个问题，本质上是<code>ResizeObserver回调函数</code>执行的中在同一次绘制引发了自身大小改变导致的，按照MDN的解释，是循环依赖导致的无限循环只会在每次迭代期间处理DOM中更深的元素的方式解决，并且推送这个error信息。在不对项目回调函数进行大修改之前，为了优化这个问题，使用</strong>requestAnimationFrame</strong>代替<strong>setTimeout</strong>便可以解决这个问题。 </p>
-<h2 id="2-clientHeight-getBoundingClientRect"><a href="#2-clientHeight-getBoundingClientRect" class="headerlink" title="2.clientHeight &amp; getBoundingClientRect"></a><span id="title_2" />2.clientHeight &amp; getBoundingClientRect</h2><p>有resize操作的组件本质上用于截屏，需要同时获取元素的位置以及宽高，由于使用了<strong>transform: scale</strong>，所以使用了el.getBoundingClientRect获取元素当前大小和位置。<br>当截图开始后会使用eelctron新开一个窗口进行操作，使用getBoundingClientRect获取的高度数据，在高度上分割图片成多个小图截图以保证清晰度，但是在最终拼接时总是出现对不上的问题。查询api后发现问题：</p>
-<h4 id="问题复现"><a href="#问题复现" class="headerlink" title="问题复现"></a>问题复现</h4><h5 id="1-getBoundingClientRect"><a href="#1-getBoundingClientRect" class="headerlink" title="1.getBoundingClientRect"></a>1.getBoundingClientRect</h5><p>这个api获取的是一个<strong>DOMRect</strong>对象，拥有多个属性：水平垂直坐标x&#x2F;y，矩形宽高width&#x2F;height，矩形上右下左坐标top&#x2F;right等，此外，如果是一个不规则图形例如圆形，仍然获得对应最小的矩形的属性（ps.如果需要文字环绕圆形可以使用<strong>shape-outside</strong>这个css属性）。<strong>DOMRect</strong>对象的各个属性根据实际显示的效果，即<strong>scale</strong>会影响最终的数据，并且这个属性是有小数的。</p>
-<h5 id="2-offsetHeight-offsetWidth-clientHeight-clientWidth"><a href="#2-offsetHeight-offsetWidth-clientHeight-clientWidth" class="headerlink" title="2.offsetHeight&#x2F;offsetWidth &amp; clientHeight&#x2F;clientWidth"></a>2.offsetHeight&#x2F;offsetWidth &amp; clientHeight&#x2F;clientWidth</h5><p>这两个属性可以获取元素的实际大小，是<strong>scale</strong>不生效的时候的大小，或者说是<strong>scale</strong>为1时候的大小。<br>offsetHeight&#x2F;offsetWidth，获取了边框内边距以及<strong>滚动条</strong>的宽高，是标志一个元素实际占用页面空间；clientHeight&#x2F;clientWidth只包含了内边距，是元素内容宽高或者叫可见宽高，他们获取的属性返回值通常是整数。</p>
-<h4 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h4><p>由于计算切割位置使用的带小数的数据，但实际截图拼接时没有，导致了操作界面的图片比例和截图窗口的图片比例不同，虽然差距仅有几个px，但是在拼接图片的操作中影响很大。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2024/07/20/Web%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" data-id="cm1a4ksoi0000ugu8chby1fiw" data-title="Web开发遇到的问题：Resize操作" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ResizeObserver/" rel="tag">ResizeObserver</a></li></ul>
 
     </footer>
   </div>
@@ -312,7 +303,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/02/">February 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/02/">February 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li></ul>
     </div>
   </div>
 
@@ -325,11 +316,11 @@
       <ul>
         
           <li>
-            <a href="/2024/07/20/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/">移动端开发遇到的问题</a>
+            <a href="/2024/08/12/Web%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/">Web开发遇到的问题：Resize操作</a>
           </li>
         
           <li>
-            <a href="/2024/07/20/Web%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/">Web开发遇到的问题：Resize操作</a>
+            <a href="/2024/07/20/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/">移动端开发遇到的问题</a>
           </li>
         
           <li>
